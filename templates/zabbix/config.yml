@@ -1,0 +1,5 @@
+name: ZABBIX-Server
+description: |
+  "ZABBIX-Server"
+version: 3.4
+category: "NMS"

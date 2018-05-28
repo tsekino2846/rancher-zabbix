@@ -1,0 +1,51 @@
+version: '2'
+volumes:
+  pg-data:
+    driver: local
+services:
+  zabbix-web:
+    image: zabbix/zabbix-web-nginx-pgsql:alpine-3.4-latest
+    environment:
+      ZBX_SERVER_HOST: 'zabbix-server'
+      DB_SERVER_HOST: 'postgres'
+      POSTGRES_DB: 'zabbix'
+      POSTGRES_USER: 'zabbix'
+      POSTGRES_PASSWORD: 'zabbix'
+      PHP_TZ: 'Asia/Tokyo'
+    ports:
+      - 8000:80/tcp
+      - 1443:443/tcp
+    labels:
+      io.rancher.container.hostname_override: container_name
+    links:
+    - zabbix-server:zabbix-server
+    - postgres:postgres
+  zabbix-server:
+    image: zabbix/zabbix-server-pgsql:alpine-3.4-latest
+    environment:
+      DB_SERVER_HOST: 'postgres'
+      POSTGRES_DB: 'zabbix'
+      POSTGRES_USER: 'zabbix'
+      POSTGRES_PASSWORD: 'zabbix'
+    labels:
+      io.rancher.container.hostname_override: container_name
+    links:
+    - postgres:postgres
+  pg-volume:
+    image: busybox
+    volumes:
+    - pg-data:/var/lib/postgresql
+    labels:
+      io.rancher.container.start_once: 'true'
+      io.rancher.container.hostname_override: container_name
+  postgres:
+    image: postgres:9-alpine
+    environment:
+      POSTGRES_DB: 'zabbix'
+      POSTGRES_USER: 'zabbix'
+      POSTGRES_PASSWORD: 'zabbix'
+    volumes_from:
+    - pg-volume
+    labels:
+      io.rancher.sidekicks: pg-volume
+      io.rancher.container.hostname_override: container_name

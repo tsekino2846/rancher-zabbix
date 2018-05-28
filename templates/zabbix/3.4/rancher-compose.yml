@@ -1,0 +1,19 @@
+version: '2'
+services:
+  zabbix-web:
+    retain_ip: true
+    scale: 1
+    start_on_create: true
+
+  zabbix-server:
+    retain_ip: true
+    scale: 1
+    start_on_create: true
+  pg-volume:
+    retain_ip: true
+    scale: 1
+    start_on_create: true
+  postgres:
+    retain_ip: true
+    scale: 1
+    start_on_create: true

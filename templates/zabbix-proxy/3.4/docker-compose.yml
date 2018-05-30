@@ -1,0 +1,32 @@
+version: '2'
+services:
+  zabbix-proxy:
+    image: zabbix/zabbix-proxy-mysql:alpine-3.4-latest
+    environment:
+      ZBX_HOSTNAME: 'zabbix-proxy_Juniper'
+      ZBX_SERVER_HOST: 'zabbix-server'
+      DB_SERVER_HOST: 'mysql'
+      MYSQL_DATABASE: 'zabbix_proxy'
+      MYSQL_USER: 'zabbix'
+      MYSQL_PASSWORD: 'zabbix'
+      ZBX_ENABLE_SNMP_TRAPS: 'true'
+    ports:
+      - 10051/tcp
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.container.hostname_override: container_name
+    external_links:
+    - zabbix-server/zabbix-server:zabbix-server
+    links:
+    - mysql:mysql
+  mysql:
+    image: mariadb:10
+    environment:
+      #MYSQL_RANDOM_ROOT_PASSWORD: 'true' 
+      MYSQL_ROOT_PASSWORD: 'rootpass'
+      MYSQL_DATABASE: 'zabbix_proxy'
+      MYSQL_USER: 'zabbix'
+      MYSQL_PASSWORD: 'zabbix'
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.container.hostname_override: container_name

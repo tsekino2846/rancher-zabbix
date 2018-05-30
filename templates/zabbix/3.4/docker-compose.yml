@@ -16,6 +16,7 @@ services:
       - 8000:80/tcp
       - 1443:443/tcp
     labels:
+      io.rancher.container.pull_image: always
       io.rancher.container.hostname_override: container_name
     links:
     - zabbix-server:zabbix-server
@@ -28,6 +29,7 @@ services:
       POSTGRES_USER: 'zabbix'
       POSTGRES_PASSWORD: 'zabbix'
     labels:
+      io.rancher.container.pull_image: always
       io.rancher.container.hostname_override: container_name
     links:
     - postgres:postgres
@@ -47,5 +49,6 @@ services:
     volumes_from:
     - pg-volume
     labels:
+      io.rancher.container.pull_image: always
       io.rancher.sidekicks: pg-volume
       io.rancher.container.hostname_override: container_name

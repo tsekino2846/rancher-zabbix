@@ -1,0 +1,8 @@
+name: ZABBIX-Proxy
+description: |
+  ZABBIX-Proxy
+version: 3.4
+category: NMS
+maintainer: Taisuke Sekino
+license: Apache2
+projectURL: http://192.168.162.5:8080/gitbucket/git/rancher/my-rancher-catalog.git

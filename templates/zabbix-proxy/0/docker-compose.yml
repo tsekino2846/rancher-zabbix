@@ -3,7 +3,7 @@ services:
   zabbix-proxy:
     image: zabbix/zabbix-proxy-mysql:alpine-3.4-latest
     environment:
-      ZBX_HOSTNAME: 'zabbix-proxy_Juniper'
+      ZBX_HOSTNAME: "${zbx_host_name}"
       ZBX_SERVER_HOST: 'zabbix-server'
       DB_SERVER_HOST: 'mysql'
       MYSQL_DATABASE: 'zabbix_proxy'

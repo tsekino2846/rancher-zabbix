@@ -1,4 +1,17 @@
 version: '2'
+catalog:
+  name: "Zabbix Proxy"
+  version: "3.4"
+  description: "Zabbix Proxy (MySQL)"
+  uuid: zabbixserver-0
+  minimum_rancher_version: v1.6.17
+  questions:
+    - variable: zbx_host_name
+      description: "Name of the Zabbix Proxy"
+      label: "Host Name"
+      type: "string"
+      required: true
+      default: "zabbix proxy"
 services:
   zabbix-proxy:
     retain_ip: true
